@@ -8,38 +8,100 @@
 
 import SpriteKit
 
+//TODO
+//move to a new class
+
+//create an interface
+//create a delegate
+
+class TouchHelper : NSObject {
+    
+    
+}
+
 class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+
+    var isRotatingLeft:Bool, directionIsDecided:Bool
+    var lastTouch : CGPoint
+    var startOfTouch : CGPoint
+    
+    var totalMoved : CGFloat;
+    
+    required init(coder aDecoder: NSCoder) {
+        //   fatalError("init(coder:) has not been implemented")
+        self.isRotatingLeft = false
+        self.directionIsDecided = false
+        self.lastTouch = CGPointZero
+        self.startOfTouch = CGPointZero
+        totalMoved = 0;
+        super.init(coder: aDecoder)
+    }
+    
+
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        for touch in touches {
+            let location = touch.locationInNode(self)
+            decideWhichDirectionWeAreGoingIn(startOfTouch, currentPoint: location)
+            let distance = distanceWeHaveMoved(self.lastTouch, currentPoint: location)
+            haveMovedDistance(distance);
+            self.lastTouch = location;
+        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        /* Called when a touch begins */
+        directionIsDecided = false
+                totalMoved = 0
+        print("setting totalmoved to 0! touches begain")
         
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+        for touch in touches {
+            startOfTouch = touch.locationInNode(self)
+            self.lastTouch = startOfTouch;
         }
     }
-   
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+    
+    override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!) {
+        startOfTouch = CGPointZero
+
     }
+    
+    private func decideWhichDirectionWeAreGoingIn(startPoint:CGPoint, currentPoint:CGPoint)
+    {
+        if directionIsDecided
+        {
+        return;
+        }
+        
+        //we do not know where the fuck we are going. find out
+        
+        var goingUpwards = currentPoint.y > startPoint.y;
+        //        var goingDown = currentPoint.y < startPoint.y;
+        //        var goingLeft = currentPoint.x < startPoint.x;
+        var goingRight = currentPoint.x > startPoint.x;
+        
+        var turnRight = goingRight || goingUpwards;
+        //        var turnRight = goingUpwards || goingRight;
+        
+        isRotatingLeft = !turnRight
+        directionIsDecided = true
+        
+    }
+    
+    private func haveMovedDistance(distance: CGFloat){
+        if isRotatingLeft {
+        totalMoved = totalMoved - distance
+        }
+        else {
+            totalMoved = totalMoved  + distance;
+        }
+    println(totalMoved);
+    }
+    
+    func distanceWeHaveMoved(lastPoint:CGPoint, currentPoint:CGPoint) -> CGFloat
+    {
+        let distance = hypot(currentPoint.x - lastPoint.x, currentPoint.y - lastPoint.y);
+        //   println("distance betweeeeeeeeen points")
+        //print(distance)
+        return distance;
+    }
+    
 }

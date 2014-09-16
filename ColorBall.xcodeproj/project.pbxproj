@@ -413,6 +413,7 @@
 				F187B44419C8A9AB00F2AC12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F187B44519C8A9AB00F2AC12 /* Build configuration list for PBXNativeTarget "ColorBallTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +422,7 @@
 				F187B44719C8A9AB00F2AC12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
