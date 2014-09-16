@@ -9,6 +9,11 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var enemies : Array<SKShapeNode> = []
+    
+    var lastEnemyAddTime : CFTimeInterval = 0
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         let myLabel = SKLabelNode()
@@ -39,5 +44,29 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
+        if currentTime > lastEnemyAddTime + 3 {
+            lastEnemyAddTime = currentTime
+            
+            let newEnemy = SKShapeNode()
+            let ballWidth : CGFloat = 25
+            let ballHeight : CGFloat = ballWidth
+            let circle = CGRect(x: 0, y: 0, width: ballWidth, height: ballHeight)
+            newEnemy.path = UIBezierPath(ovalInRect: circle).CGPath
+            newEnemy.fillColor = SKColor.blackColor()
+            newEnemy.lineWidth = 0
+            newEnemy.position = CGPoint(x: CGRectGetMidX(self.frame) - ballWidth / 2, y: self.frame.height - 100)
+            
+            enemies.append(newEnemy)
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                self.addChild(newEnemy)
+            })
+        }
+
+        for enemy : SKShapeNode in enemies {
+            let moveNodeDown = SKAction.moveByX(0, y: -1, duration: 1)
+            enemy.runAction(moveNodeDown)
+        }
     }
 }
