@@ -11,10 +11,10 @@ import SpriteKit
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+        let myLabel = SKLabelNode()
+        myLabel.text = "Color Ball"
+        myLabel.fontSize = 49
+        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height - 100)
         
         self.addChild(myLabel)
     }
