@@ -17,6 +17,20 @@ class GameScene: SKScene {
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:self.frame.size.height - 100)
         
         self.addChild(myLabel)
+        
+        
+        let ballWidth : CGFloat = 120
+        let ballHeight : CGFloat = ballWidth
+        let circle = CGRect(x: 0, y: 0, width: ballWidth, height: ballHeight)
+
+        let myBall = SKShapeNode()
+        myBall.path = UIBezierPath(ovalInRect: circle).CGPath
+        myBall.fillColor = SKColor.redColor()
+        myBall.lineWidth = 0
+        myBall.position = CGPoint(x:CGRectGetMidX(self.frame) - ballWidth / 2, y: 0 + ballHeight / 2)
+        
+        
+        self.addChild(myBall)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
