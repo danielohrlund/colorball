@@ -100,6 +100,15 @@ class GameScene: SKScene {
         else {
             totalMoved = totalMoved  + distance;
         }
+
+
+        var realDistance = -distance
+        if isRotatingLeft { realDistance = distance }
+
+        let rotator = SKAction.rotateByAngle((2*3.14 / 360) * realDistance * 0.75, duration: 0)
+
+        theBall.runAction(rotator)
+
     println(totalMoved);
     }
     
@@ -138,6 +147,14 @@ class GameScene: SKScene {
         
         self.addChild(theBall)
     }
+    
+//    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+//        /* Called when a touch begins */
+//        
+//        let rotator = SKAction.rotateByAngle(2*3.14 / 360, duration: 0)
+//        
+//        theBall.runAction(rotator)
+//    }
     
     let enemySpeed : CGFloat = 4
     let enemySecondIncrements : CFTimeInterval = 3
