@@ -139,11 +139,13 @@ class GameScene: SKScene {
         self.addChild(theBall)
     }
     
+    let enemySpeed : CGFloat = 4
+    let enemySecondIncrements : CFTimeInterval = 3
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
-        if currentTime > lastEnemyAddTime + 3 {
+        if currentTime > lastEnemyAddTime + enemySecondIncrements {
             lastEnemyAddTime = currentTime
             
             let newEnemy = SKShapeNode()
@@ -163,7 +165,7 @@ class GameScene: SKScene {
         }
 
         for enemy : SKShapeNode in enemies {
-            let moveNodeDown = SKAction.moveByX(0, y: -1, duration: 1)
+            let moveNodeDown = SKAction.moveByX(0, y: -enemySpeed, duration: 0)
             enemy.runAction(moveNodeDown)
         }
     }
