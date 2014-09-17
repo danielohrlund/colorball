@@ -111,6 +111,8 @@ class GameScene: SKScene {
         return distance;
 }
     
+    var theBall : SKSpriteNode = SKSpriteNode(imageNamed:"Boll")
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         let myLabel = SKLabelNode()
@@ -125,14 +127,16 @@ class GameScene: SKScene {
         let ballHeight : CGFloat = ballWidth
         let circle = CGRect(x: 0, y: 0, width: ballWidth, height: ballHeight)
 
-        let myBall = SKShapeNode()
-        myBall.path = UIBezierPath(ovalInRect: circle).CGPath
-        myBall.fillColor = SKColor.redColor()
-        myBall.lineWidth = 0
-        myBall.position = CGPoint(x:CGRectGetMidX(self.frame) - ballWidth / 2, y: 0 + ballHeight / 2)
+//        let myBall = SKShapeNode()
+        theBall.xScale = 1
+        theBall.yScale = 1
+//        myBall.path = UIBezierPath(ovalInRect: circle).CGPath
+//        myBall.fillColor = SKColor.redColor()
+//        myBall.lineWidth = 0
+        theBall.position = CGPoint(x:CGRectGetMidX(self.frame) - ballWidth / 2, y: 0 + ballHeight / 2)
         
         
-        self.addChild(myBall)
+        self.addChild(theBall)
     }
     
    
